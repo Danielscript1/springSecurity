@@ -30,7 +30,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             .loginPage("/login")
             .permitAll()
         )
-		.logout(logout -> logout.logoutUrl("/logout"));}
+		.logout(logout -> logout.logoutUrl("/logout")).csrf().disable();}
 	//autenticação com banco
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception{
@@ -38,8 +38,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	UserDetails user =
 			 User.builder()
-				.username("david")
-				.password(encoder.encode("david"))
+				.username("er")
+				.password(encoder.encode("erik"))
 				.roles("ADM")
 				.build();
 	
