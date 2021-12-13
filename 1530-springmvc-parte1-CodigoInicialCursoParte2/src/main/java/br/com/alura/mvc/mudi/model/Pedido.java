@@ -35,6 +35,7 @@ public class Pedido {
 	
 	//associacao um pedido tem muitas ofertas
 	@OneToMany(cascade = CascadeType.ALL,mappedBy = "pedido",fetch = FetchType.LAZY)
+	@JsonIgnore
 	private	List<Oferta> oferta;
 	
 	public Long getId() {
