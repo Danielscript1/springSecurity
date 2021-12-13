@@ -20,7 +20,7 @@ public class Oferta {
 	private LocalDate dataDaEntrega;
 	private String comentario;
 	//associação de oferta com pedido
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JsonIgnore
 	private Pedido pedido;
 	
