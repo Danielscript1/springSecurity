@@ -5,7 +5,7 @@
 	
 		<div class="container" id="oferta">
 			<div th:replace="~{base :: titulo('faca sua oferta')}"></div>
-							
+					
 			<div class="card mb-3"  v-for="pedido in pedido">
 				<div class="card-header alert-dark" >{{pedido.nomeProduto}}</div>
 				
@@ -29,7 +29,8 @@
 							<div>
 								<textarea class="form-control" >{{pedido.comentario}}</textarea>
 							</div>
-							<button  v-on:click="enviarOferta(pedido)" class="btn btn-primary mt-2" >Enviar Oferta</button>
+							<button v-if="pedido.ofertaEnviada" v-on:click="enviarOferta(pedido)" class="btn btn-success mt-2" >Oferta Enviada</button>
+							<button v-else v-on:click="enviarOferta(pedido)" class="btn btn-primary mt-2" >Enviar Oferta</button>
 						</div>
 						<div class="col-12 col-sm-4">
 							<div>
@@ -39,6 +40,7 @@
 					</div>
 				</div>
 			</div>
+	
 		</div>
 		<script>
 		function onload(){
@@ -50,13 +52,24 @@
 				  mounted () {
 					    axios
 					      .get('http://localhost:8050/api/pedidos/aguardando')
-					      .then(response => (this.pedido = response.data))
+					      .then(response =>{
+					    	  response.data.forEach(pedido => pedido.ofertaEnviada = false)
+					    	  this.pedido = response.data
+					    	  
+					      })
 					  },
-					methods :{
-						enviarOferta : function(pedido){
-							console.log(pedido);
-						}
-					}	  
+					  methods:{
+                          enviarOferta: function(pedido){
+                              axios
+                                  .post('http://localhost:8050/api/oferta', {
+                                      pedidoId: pedido.id,
+                                      valor: pedido.valorNegociado,
+                                      dataDaEntrega: pedido.dataDaEntrega, 
+                                      comentario: pedido.comentario
+                                  })
+                                  .then(response => pedido.ofertaEnviada = true);
+                          }
+                      }
 				})
 		}
 		</script>
