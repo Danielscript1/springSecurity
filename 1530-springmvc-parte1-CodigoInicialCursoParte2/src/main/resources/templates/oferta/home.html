@@ -27,7 +27,7 @@
 							</div>
 							<div>Comentario</div>
 							<div>
-								<textarea class="form-control" >{{pedido.comentario}}</textarea>
+								<textarea  class="form-control" v-model=pedido.comentario >{{pedido.comentario}}</textarea>
 							</div>
 							<button v-if="pedido.ofertaEnviada" v-on:click="enviarOferta(pedido)" class="btn btn-success mt-2" >Oferta Enviada</button>
 							<button v-else v-on:click="enviarOferta(pedido)" class="btn btn-primary mt-2" >Enviar Oferta</button>
@@ -62,10 +62,10 @@
                           enviarOferta: function(pedido){
                               axios
                                   .post('http://localhost:8050/api/oferta', {
-                                      pedidoId: pedido.id,
-                                      valor: pedido.valorNegociado,
-                                      dataDaEntrega: pedido.dataDaEntrega, 
-                                      comentario: pedido.comentario
+                                	  pedidoId: pedido.id,
+                                	  valor: pedido.negociado,
+                                	  dataDaEntrega: pedido.dataDaEntrega, 
+                                	  comentario: pedido.comentario
                                   })
                                   .then(response => pedido.ofertaEnviada = true);
                           }
